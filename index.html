@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ward View</title>
+    <meta
+      name="description"
+      content="A simple, secure web app that shows every bed in a hospital ward on one screen, coloured by the doctor responsible for it."
+    />
+    <meta name="theme-color" content="#0f172a" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#top">
+          <img src="assets/favicon.svg" alt="" width="32" height="32" />
+          <span>Ward View</span>
+        </a>
+        <nav aria-label="Sections">
+          <a href="#problem">Problem</a>
+          <a href="#solution">Solution</a>
+          <a href="#tour">App Tour</a>
+          <a href="#features">Features</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#data-flow">Data Flow</a>
+          <a href="#tech-stack">Tech Stack</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="top" class="hero">
+        <div class="container hero-inner">
+          <div class="hero-text">
+            <h1>See Clearly, Care Confidently</h1>
+            <p class="intro">
+              Ward View is a simple, secure web app that shows every bed in a hospital ward on one
+              screen, coloured by the doctor responsible for it. Doctors log in, see the whole ward,
+              then admit, update or discharge patients.
+            </p>
+            <div class="hero-actions">
+              <a class="button" href="#tour">Take the tour</a>
+              <span class="note">Source code is private for security.</span>
+            </div>
+          </div>
+          <figure class="screens hero-screens">
+            <div class="browser"><img src="assets/screens/ward-desktop.webp" alt="Ward page on desktop: 40 beds in four rows, coloured blue and green by doctor" width="2560" height="1600" fetchpriority="high" /></div>
+            <div class="phone"><img src="assets/screens/bed-phone.webp" alt="Bed details on mobile" width="780" height="1688" /></div>
+          </figure>
+        </div>
+      </section>
+
+      <section id="problem" class="section">
+        <div class="container">
+          <h2>Problem</h2>
+          <p class="intro">
+            Two doctors share one ward of 40 beds. Nobody has a single, up-to-date picture of which
+            bed belongs to which doctor, or which patient is lying in it.
+          </p>
+          <ul class="points">
+            <li>There is no single view of bed ownership across the ward.</li>
+            <li>Paper lists and chat messages go out of date and are hard to read on a round.</li>
+            <li>Patient details shared in chats and on paper are not secure.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="solution" class="section section-tint">
+        <div class="container">
+          <h2>Solution</h2>
+          <p class="intro">
+            One small Django website, protected by a login, replaces the paper list. Every change one
+            doctor makes reaches the other doctor's screen within 30 seconds.
+          </p>
+          <ol class="steps">
+            <li><span>1</span>Each doctor signs in with their own account.</li>
+            <li><span>2</span>See all 40 beds at once, coloured by doctor.</li>
+            <li><span>3</span>Admit, update or discharge a patient in a few taps.</li>
+            <li><span>4</span>Hand a bed over to a colleague with one button.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="tour" class="section">
+        <div class="container">
+          <h2>App Tour</h2>
+          <p class="intro">
+            The main screens of the web app. Every screen works on a ward PC and on a phone at the
+            bedside.
+          </p>
+
+          <div class="tabs" role="tablist" aria-label="App screens">
+            <button role="tab" id="tab-login" aria-controls="panel-login" aria-selected="true">Sign in</button>
+            <button role="tab" id="tab-ward" aria-controls="panel-ward" aria-selected="false">Ward</button>
+            <button role="tab" id="tab-bed" aria-controls="panel-bed" aria-selected="false">Bed details</button>
+            <button role="tab" id="tab-patient" aria-controls="panel-patient" aria-selected="false">Patient form</button>
+            <button role="tab" id="tab-discharge" aria-controls="panel-discharge" aria-selected="false">Discharge</button>
+            <button role="tab" id="tab-profile" aria-controls="panel-profile" aria-selected="false">My profile</button>
+          </div>
+
+          <div class="panel" role="tabpanel" id="panel-login" aria-labelledby="tab-login">
+            <p class="caption">One account per doctor. Five wrong passwords lock the account for 30 minutes.</p>
+            <figure class="screens">
+              <div class="browser"><img src="assets/screens/login-desktop.webp" alt="Sign in on desktop" width="2560" height="1600" loading="lazy" /></div>
+              <div class="phone"><img src="assets/screens/login-phone.webp" alt="Sign in on mobile" width="780" height="1688" loading="lazy" /></div>
+            </figure>
+          </div>
+          <div class="panel" role="tabpanel" id="panel-ward" aria-labelledby="tab-ward">
+            <p class="caption">All beds in rows of ten, a colour key per doctor and live totals. The page refreshes every 30 seconds.</p>
+            <figure class="screens">
+              <div class="browser"><img src="assets/screens/ward-desktop.webp" alt="Ward grid on desktop" width="2560" height="1600" loading="lazy" /></div>
+              <div class="phone"><img src="assets/screens/ward-phone.webp" alt="Ward grid on mobile" width="780" height="1688" loading="lazy" /></div>
+            </figure>
+          </div>
+          <div class="panel" role="tabpanel" id="panel-bed" aria-labelledby="tab-bed">
+            <p class="caption">Patient details, who last changed the bed and when, plus Assign to me and Assign to another doctor.</p>
+            <figure class="screens">
+              <div class="browser"><img src="assets/screens/bed-desktop.webp" alt="Bed details on desktop" width="2560" height="1600" loading="lazy" /></div>
+              <div class="phone"><img src="assets/screens/bed-phone.webp" alt="Bed details on mobile" width="780" height="1688" loading="lazy" /></div>
+            </figure>
+          </div>
+          <div class="panel" role="tabpanel" id="panel-patient" aria-labelledby="tab-patient">
+            <p class="caption">BHT number, name, condition, a problem list and investigations to be done as checkboxes.</p>
+            <figure class="screens">
+              <div class="browser"><img src="assets/screens/patient-desktop.webp" alt="Patient form on desktop" width="2560" height="1600" loading="lazy" /></div>
+              <div class="phone"><img src="assets/screens/patient-phone.webp" alt="Patient form on mobile" width="780" height="1688" loading="lazy" /></div>
+            </figure>
+          </div>
+          <div class="panel" role="tabpanel" id="panel-discharge" aria-labelledby="tab-discharge">
+            <p class="caption">Discharge asks for confirmation, then clears every patient field. Nothing about the patient is kept.</p>
+            <figure class="screens">
+              <div class="browser"><img src="assets/screens/discharge-desktop.webp" alt="Discharge confirmation on desktop" width="2560" height="1600" loading="lazy" /></div>
+              <div class="phone"><img src="assets/screens/discharge-phone.webp" alt="Discharge confirmation on mobile" width="780" height="1688" loading="lazy" /></div>
+            </figure>
+          </div>
+          <div class="panel" role="tabpanel" id="panel-profile" aria-labelledby="tab-profile">
+            <p class="caption">Each doctor picks a bed colour from a fixed palette. A colour already taken by a colleague cannot be chosen.</p>
+            <figure class="screens">
+              <div class="browser"><img src="assets/screens/profile-desktop.webp" alt="My profile colour picker on desktop" width="2560" height="1600" loading="lazy" /></div>
+              <div class="phone"><img src="assets/screens/profile-phone.webp" alt="My profile colour picker on mobile" width="780" height="1688" loading="lazy" /></div>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="section section-tint">
+        <div class="container">
+          <h2>Features</h2>
+          <p class="intro">
+            A small feature set for two doctors and one admin, kept simple enough to use during a ward
+            round.
+          </p>
+          <ul class="cards">
+            <li class="card">
+              <h3>Secure login</h3>
+              <p>Personal accounts with passwords of at least 10 characters. Five wrong attempts lock the account for 30 minutes.</p>
+            </li>
+            <li class="card">
+              <h3>Colour-coded ward</h3>
+              <p>Every bed shows its number, patient and doctor:</p>
+              <div class="mini-beds" aria-hidden="true">
+                <span class="mini" style="--doctor: #2563eb"><b>7</b>T. Guna…</span>
+                <span class="mini mini-empty" style="--doctor: #2563eb"><b>9</b>Empty</span>
+                <span class="mini" style="--doctor: #15803d"><b>12</b>C. Kumara</span>
+              </div>
+            </li>
+            <li class="card">
+              <h3>Live updates</h3>
+              <p>The ward page refreshes every 30 seconds, so the other doctor's changes appear without reloading.</p>
+            </li>
+            <li class="card">
+              <h3>Patient record</h3>
+              <p>Admit, edit and discharge. Each change records who made it and when, in Sri Lanka time.</p>
+            </li>
+            <li class="card">
+              <h3>One-tap handover</h3>
+              <p><b>Assign to me</b> or <b>Assign to another doctor</b> changes only the doctor. The patient stays and the bed changes colour.</p>
+            </li>
+            <li class="card">
+              <h3>Bed management</h3>
+              <p>Add, renumber or remove beds. A bed with a patient cannot be deleted until the patient is discharged.</p>
+            </li>
+            <li class="card">
+              <h3>One-time setup</h3>
+              <p>The admin creates all 40 beds split between the doctors in one form, with no gaps or overlaps.</p>
+            </li>
+            <li class="card">
+              <h3>Privacy by design</h3>
+              <p>Discharge keeps nothing. Pages are never indexed by search engines, and admin history never shows patient details.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="architecture" class="section">
+        <div class="container">
+          <h2>Architecture</h2>
+          <p class="intro">
+            One Django app does everything: pages, login, admin and database access. There is no
+            separate frontend and no JavaScript framework.
+          </p>
+
+          <div class="arch">
+            <div class="tier">
+              <h3>Client <small>Browser</small></h3>
+              <div class="box box-strong">Doctors &amp; admin<br /><small>Ward PC · phone</small></div>
+              <div class="box">Server-rendered HTML</div>
+              <div class="box">Plain CSS · no JavaScript</div>
+              <div class="box">Auto refresh every 30 s</div>
+            </div>
+
+            <div class="link"><span>HTTPS</span></div>
+
+            <div class="tier">
+              <h3>App <small>Render</small></h3>
+              <div class="box box-strong">Django 5.2 LTS<br /><small>Gunicorn · WhiteNoise</small></div>
+              <div class="box">Security middleware · HSTS · CSRF</div>
+              <div class="box">django-axes login lockout</div>
+              <div class="box">Ward &amp; accounts views · templates</div>
+              <div class="box">Django Admin (secret URL)</div>
+            </div>
+
+            <div class="link"><span>SQL over SSL</span></div>
+
+            <div class="tier">
+              <h3>Data &amp; delivery</h3>
+              <div class="box box-strong">PostgreSQL<br /><small>Neon · users, beds, investigations</small></div>
+              <div class="box box-strong">GitHub<br /><small>Private repo · deploy on push to main</small></div>
+              <div class="box">build.sh: install · collectstatic · migrate</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="data-flow" class="section section-tint">
+        <div class="container">
+          <h2>Data Flow</h2>
+          <p class="intro">
+            Four flows show how data moves through the system: signing in, recording a patient, handing
+            over a bed and discharging.
+          </p>
+
+          <div class="flows">
+            <article class="flow">
+              <h3>Sign in</h3>
+              <ol>
+                <li>The doctor submits <code>POST /login/</code> with a CSRF token.</li>
+                <li>django-axes checks whether the username is locked.</li>
+                <li>Django checks the hashed password. A wrong one shows a general error.</li>
+                <li>A secure session cookie lasts one day or until the browser closes.</li>
+              </ol>
+            </article>
+            <article class="flow">
+              <h3>Admit or update a patient</h3>
+              <ol>
+                <li>The doctor opens <code>/beds/&lt;n&gt;/patient/</code> and fills in the form.</li>
+                <li>The form needs a BHT number or a name.</li>
+                <li>The bed is saved in PostgreSQL with <em>updated by</em> and <em>updated at</em>.</li>
+                <li>The other doctor's ward page shows the change within 30 seconds.</li>
+              </ol>
+            </article>
+            <article class="flow">
+              <h3>Hand over a bed</h3>
+              <ol>
+                <li>The doctor taps <b>Assign to me</b> or chooses another doctor.</li>
+                <li><code>POST /beds/&lt;n&gt;/assign-me/</code> or <code>/reassign/</code> is sent.</li>
+                <li>Only the bed's doctor field changes. The patient stays.</li>
+                <li>The bed takes the new doctor's colour on the ward page.</li>
+              </ol>
+            </article>
+            <article class="flow">
+              <h3>Discharge</h3>
+              <ol>
+                <li><code>GET /beds/&lt;n&gt;/discharge/</code> shows a confirmation page.</li>
+                <li>Only the confirming <code>POST</code> discharges the patient.</li>
+                <li>One transaction clears every patient field and investigation.</li>
+                <li>The bed shows <b>Empty</b>. No patient data is kept.</li>
+              </ol>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="tech-stack" class="section">
+        <div class="container">
+          <h2>Tech Stack</h2>
+          <p class="intro">Open-source tools with free hosting tiers.</p>
+          <dl class="stack">
+            <div>
+              <dt>Backend</dt>
+              <dd><span>Python 3.14</span><span>Django 5.2 LTS</span><span>Django Admin</span><span>Gunicorn</span><span>WhiteNoise</span></dd>
+            </div>
+            <div>
+              <dt>Frontend</dt>
+              <dd><span>Django templates</span><span>Plain CSS</span><span>No JavaScript</span></dd>
+            </div>
+            <div>
+              <dt>Security</dt>
+              <dd><span>Django auth</span><span>django-axes</span><span>CSRF protection</span><span>HSTS</span><span>Secure cookies</span></dd>
+            </div>
+            <div>
+              <dt>Database</dt>
+              <dd><span>PostgreSQL</span><span>psycopg 3</span><span>dj-database-url</span></dd>
+            </div>
+            <div>
+              <dt>Quality</dt>
+              <dd><span>Django test runner</span><span>Ruff</span></dd>
+            </div>
+            <div>
+              <dt>DevOps</dt>
+              <dd><span>Git</span><span>GitHub</span><span>Docker Compose</span></dd>
+            </div>
+            <div>
+              <dt>Hosting</dt>
+              <dd><span>Render</span><span>Neon</span><span>GitHub Pages</span></dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">Ward View</div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
